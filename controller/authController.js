@@ -100,6 +100,7 @@ const renovarToken = async( req, res = response ) => {
     const token = await generarJWT( usuario.id );
     
     res.status(200).json({
+        usuario,
         token
     })
 }
