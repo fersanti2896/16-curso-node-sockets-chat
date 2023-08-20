@@ -2,6 +2,12 @@
 let usuario = null;
 let socket = null;
 
+const txtUid = document.querySelector('#txtUid');
+const txtMensaje = document.querySelector('#txtMensaje');
+const ulUsuarios = document.querySelector('#ulUsuarios');
+const ulMensajes = document.querySelector('#ulMensajes');
+const btnSalir = document.querySelector('#btnSalir');
+
 /* Valida el token del localstorage */
 const validarJWT = async() => {
     const token = localStorage.getItem('token') || '';
@@ -27,10 +33,30 @@ const validarJWT = async() => {
 }
 
 const conectarSocket = async() => {
-    const socket = io({
+    socket = io({
         'extraHeaders': {
             'x-token': localStorage.getItem('token')
         }
+    });
+
+    socket.on('connect', () => {
+        console.log('Sockets Online')
+    });
+
+    socket.on('disconnect', () => {
+        console.log('Sockets Offline')
+    });
+
+    socket.on('recibir-mensajes', () => {
+        // TODO: Falta recibir el mensajes
+    });
+
+    socket.on('usuarios-activo', () => {
+        // TODO: Usuarios Activos
+    });
+
+    socket.on('mensaje-privado', () => {
+        // TODO: Mensaje privado
     });
 }
 
