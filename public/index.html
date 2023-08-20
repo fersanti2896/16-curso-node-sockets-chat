@@ -32,10 +32,20 @@
             </button>
         </div>
 
-        <div class="col-sm-6"></div>
+        <div class="col-sm-6">
+            <h1>Login</h1>
+            <hr>
+
+            <form class="d-grid">
+                <input type="text" name="email" class="form-control mb-2" placeholder="Correo">
+                <input type="password" name="password" class="form-control mb-2" placeholder="Contraseña">
+        
+                <button type="submit" class="btn btn-success">Ingresar</button>
+            </form>
+        </div>
     </div>
 
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <script src="./js/google.js" ></script>
+    <script src="./js/auth-google.js" ></script>
 </body>
 </html>
