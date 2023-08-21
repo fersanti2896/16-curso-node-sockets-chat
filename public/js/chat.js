@@ -47,17 +47,31 @@ const conectarSocket = async() => {
         console.log('Sockets Offline')
     });
 
-    socket.on('recibir-mensajes', () => {
+    socket.on( 'recibir-mensajes', () => {
         // TODO: Falta recibir el mensajes
-    });
+    } );
 
-    socket.on('usuarios-activo', () => {
-        // TODO: Usuarios Activos
-    });
+    socket.on( 'usuarios-activos', dibujarUsuarios );
 
-    socket.on('mensaje-privado', () => {
+    socket.on( 'mensaje-privado', () => {
         // TODO: Mensaje privado
-    });
+    } );
+}
+
+const dibujarUsuarios = ( usuarios = [] ) => {
+    let userHTML = '';
+    usuarios.forEach( ({ name, uid }) => {
+        userHTML += `
+            <li>
+                <p>
+                    <h5 class="text-success">${ name }</h5>
+                    <span class="fs-6 text-muted">${ uid }</span>
+                </p>
+            </li>
+        `;
+    } );
+
+    ulMensajes.innerHTML = userHTML;
 }
 
 const main = async() => {
