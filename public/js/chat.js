@@ -47,14 +47,12 @@ const conectarSocket = async() => {
         console.log('Sockets Offline')
     });
 
-    socket.on( 'recibir-mensajes', () => {
-        // TODO: Falta recibir el mensajes
-    } );
+    socket.on( 'recibir-mensajes', dibujarMensaje );
 
     socket.on( 'usuarios-activos', dibujarUsuarios );
 
-    socket.on( 'mensaje-privado', () => {
-        // TODO: Mensaje privado
+    socket.on( 'mensaje-privado', (payload) => {
+        console.log('Mensaje privado:', payload)
     } );
 }
 
@@ -71,8 +69,36 @@ const dibujarUsuarios = ( usuarios = [] ) => {
         `;
     } );
 
-    ulMensajes.innerHTML = userHTML;
+    ulUsuarios.innerHTML = userHTML;
 }
+
+const dibujarMensaje = ( mensajes = [] ) => {
+    let mensajesHTML = '';
+    mensajes.forEach( ({ nombre, mensaje }) => {
+        mensajesHTML += `
+            <li>
+                <p>
+                    <span class="text-primary">${ nombre }</span>
+                    <span>${ mensaje }</span>
+                </p>
+            </li>
+        `;
+    } );
+
+    ulMensajes.innerHTML = mensajesHTML;
+}
+
+txtMensaje.addEventListener('keyup', ({ keyCode }) => {
+    const mensaje = txtMensaje.value;
+    const uid = txtUid.value;
+
+    if( keyCode !== 13 ) { return; }
+    if( mensaje.trim().length === 0 ) { return; }
+
+    socket.emit('enviar-mensaje', { mensaje, uid });
+    txtMensaje.value = '';
+    txtUid.value = '';
+});
 
 const main = async() => {
     await validarJWT();
